@@ -1,0 +1,8 @@
+{
+  "name": "HA-kitchenpi",
+  "private": true,
+  "dependencies": {
+    "amqplib": "^0.4.2",
+    "onoff": "^1.1.1"
+  }
+}
