@@ -50,10 +50,6 @@ There are definitely times when the normal schedule just isn't going to cut it..
 ### Start the sensor listener on Pi startup
 * `sudo nano /etc/rc.local`
 * copy this command and paste it before the `exit 0` at the end of the file `RABBIT_CONNECTION_STRING='username:password@rabbithost' nodemon /home/pi/HA-kitchenpi/app.js &`
-* `cd HA-kitchenpi`
-* `sudo install.sh`
-  * The install script will prompt you for the RabbitMQ host, username, password and vhost
-
 
 ### Development
 I clone the repository locally on my computer and use the Atom editor to sync the files to my raspberry pi and use `nodemon` to restart the app whenever a file is changed. That way I don't have to manually SSH into the raspberry pi and restart the app every time I change a file.
