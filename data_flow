@@ -1,0 +1,113 @@
+kitchen raspberry pi will send messages on rabbitmq such as
+{"location": "kitchen", "type": "motion", "message": "motion detected", "timestamp": "2016-07-15Z12:00:00"}
+
+HA-pi-eater will receive these messages and store them in a database
+it will also check business rules for those sensors and if certain conditions are met
+this will also emit events on rabbitmq for
+
+
+HA-pi-UI
+Angular/React based UI to show realtime sensor information and events triggered
+will also be able to manual do things such as turn lights on/off...
+need to figure out how to make sure manually triggered things happen when automation will invert them...
+such as turn lights on during time when automation wants to turn them off...either through the UI or by physical switch
+
+HA-pi-cookbook
+this app will store the various business rules in json format
+
+{
+  "name": "kitchen-motion-lights-off",
+    "if": [
+      {
+        "location": "kitchen",
+        "type": "motion"
+      },
+      {
+        "time": {
+          "start": "*",
+          "end": "*",
+        }
+      },
+      {
+        "no-motion": "10m"
+      }
+    ],
+    "then": {
+      [
+        {
+          "rabbitmq": {
+            "queue": "z-wave-action",
+            "action": {
+              "device": "kitchen-lights",
+              "value": "off"
+            }
+          }
+        }
+      ]
+    }
+}
+
+
+{
+  "name": "kitchen-motion-lights-off",
+  "do": [
+    {
+      "if": [
+        {
+          "location": "kitchen",
+          "type": "motion"
+        },
+        {
+          "time": {
+            "start": "*",
+            "end": "*",
+          }
+        },
+        {
+          "no-motion": "10m"
+        }
+      ],
+      "then": {
+        [
+          {
+            "rabbitmq": {
+              "action": {
+                "kitchen-lights": "off"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "if": [
+        {
+          "location": "kitchen",
+          "type": "motion"
+        },
+        {
+          "time": {
+            "start": "evening",
+            "end": "night",
+          }
+        },
+        {
+          "motion": "2s"
+        }
+      ],
+      "then": {
+        [
+          {
+            "rabbitmq": {
+              "action": {
+                "kitchen-lights": "on"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+
+these will be able to be entered in text field and saved in app

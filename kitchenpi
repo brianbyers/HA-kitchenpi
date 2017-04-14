@@ -1,0 +1,30 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides: kitchenpi
+# Required-Start:   $syslog
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Manage my cool stuff
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
+# If you need to source some other scripts, do it here
+
+case "$1" in
+  start)
+    echo "Start Serving Kitchen Pi"
+    RABBIT_CONNECTION_STRING='kitchenpi:387dkj23HG32ioK@172.19.10.10' nodemon /home/pi/HA-kitchenpi/app.js &
+    exit 0
+    ;;
+  stop)
+    echo " Unfortunately Stop Serving Kitchen Pi"
+    pkill -f 'node /home/pi/HA-kitchenpi/app.js'
+    # do something to kill the service or cleanup or nothing
+    exit 0
+    ;;
+  *)
+    echo "Usage: /etc/init.d/kitchenpi {start|stop}"
+    exit 1
+    ;;
+esac
