@@ -1,5 +1,7 @@
 # What is this???
 
+[![Git](https://app.soluble.cloud/api/v1/public/badges/5aed182f-5644-49ce-911e-b2b283808be7.svg?orgId=521549019486)](https://app.soluble.cloud/repos/details/github.com/brianbyers/ha-kitchenpi?orgId=521549019486)  
+
 This is one part of my home automation setup. This particular project will detect motion for a few motion sensors and send those events on a RabbitMQ bus.
 
 Why motion sensors you ask?
